@@ -1,4 +1,5 @@
 # revise by JLZ
+# 获取文件列表，并打印
 from queue import Queue
 from threading import Thread
 from time import time
@@ -80,22 +81,22 @@ def test():
 #    print(fnames)  
        
         #创建一个主进程与工作进程通信
-    queue = Queue()
-   
-   
-    #创建4个工作线程
-    for x in range(30):
-        worker = DownloadWorker(queue)
-        #将daemon设置为True将会使主线程退出，即使所有worker都阻塞了
-        worker.daemon = True
-        worker.start()
-       
-    #将任务以tuple的形式放入队列中
-    for link in fnames:
-        queue.put((link))
-   
-    #让主线程等待队列完成所有的任务
-    queue.join()
+#    queue = Queue()
+#   
+#   
+#    #创建4个工作线程
+#    for x in range(30):
+#        worker = DownloadWorker(queue)
+#        #将daemon设置为True将会使主线程退出，即使所有worker都阻塞了
+#        worker.daemon = True
+#        worker.start()
+#       
+#    #将任务以tuple的形式放入队列中
+#    for link in fnames:
+#        queue.put((link))
+#   
+#    #让主线程等待队列完成所有的任务
+#    queue.join()
        
         
        
