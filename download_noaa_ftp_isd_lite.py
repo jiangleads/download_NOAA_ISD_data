@@ -37,6 +37,7 @@ class MyFTP(FTP):
 
    
 def test():
+    global ifisd,localpath
     ftp = MyFTP() 
     ftp.connect("ftp.ncdc.noaa.gov", 21)  
     ftp.login("anonymous", "guest") 
@@ -46,21 +47,21 @@ def test():
     j=1901
  #   while j< 1962:
     while j< 2021:
-        ftp.cwd("/pub/data/noaa/isd-lite/"+str(j))
+        ftp.cwd("/pub/data/noaa/"+ifisd+str(j))
         lst=ftp.getdirs()
-        cmds="mkdir -p /shares/Public2/NOAA/isd-lite/"+str(j)
+        cmds="mkdir -p /shares/Public2/NOAA/"+ifisd+str(j)
         os.system(cmds)
         for name in lst:
-            localname="/shares/Public2/NOAA/isd-lite/"+str(j)+"/"+name
+            localname="/shares/Public2/NOAA/"+ifisd+str(j)+"/"+name
             if((os.path.isfile(localname)) or (os.path.isfile(localname[:-3]))):
                 print(localname+" Exist!")
             else:
 #            fnames.append(str(name)
                 print(localname+" None")
-                cmds=" wget -Nc --ftp-user=anonymous --ftp-password=guest ftp://ftp.ncdc.noaa.gov/pub/data/noaa/isd-lite/"+str(j)+"/"+name \
+                cmds=" wget -Nc --ftp-user=anonymous --ftp-password=guest ftp://ftp.ncdc.noaa.gov/pub/data/noaa/"+ifisd+str(j)+"/"+name \
                 +" -P "+localpath+str(j)+"/"
                 print(cmds)
-                os.system(cmds)
+#                os.system(cmds)
         j=j+1
 
     ftp.quit()
